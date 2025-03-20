@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    depends_on:
+      - database
+    networks:
+      - app-network
+
+  database:
+    image: mongo
+    container_name: restaurant-management-database
+    restart: always
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+    environment:
+      - MONGO_INITDB_DATABASE=orders  # ✅ Assure la création de la base "orders"
+    volumes:
+      - mongo_data:/data/db
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongo_data:
+  grafana_data:

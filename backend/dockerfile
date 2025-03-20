@@ -1,0 +1,15 @@
+FROM node:18
+WORKDIR /app
+
+# Copier les fichiers de dépendances
+COPY package.json package-lock.json .  
+
+# Installer les dépendances nécessaires
+RUN npm ci && npm install pdfkit bcrypt jsonwebtoken  
+
+# Copier le reste du projet
+COPY . .  
+
+# Lancer le serveur
+CMD ["node", "server.js"]
+EXPOSE 5000
